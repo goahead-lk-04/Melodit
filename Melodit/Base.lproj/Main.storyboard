@@ -1,24 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Melodit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23V-OR-6eb">
+                                <rect key="frame" x="142" y="705" width="130" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="Upload music"/>
+                                <connections>
+                                    <action selector="click_upload_music:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jMO-bd-kas"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o5j-iM-Nzr">
+                                <rect key="frame" x="103" y="158" width="208" height="341"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="341" id="LKP-j3-qyq"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play piano" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qo0-Wi-ybJ">
+                                <rect key="frame" x="168" y="555" width="78" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get sheet music" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTb-vy-esz">
+                                <rect key="frame" x="145" y="630" width="124" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="o5j-iM-Nzr" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="4KQ-34-prg"/>
+                            <constraint firstItem="qo0-Wi-ybJ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Asi-KY-btG"/>
+                            <constraint firstItem="23V-OR-6eb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="142" id="H1E-Ub-ae0"/>
+                            <constraint firstItem="o5j-iM-Nzr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="103" id="HEy-W4-lok"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="23V-OR-6eb" secondAttribute="bottom" constant="126" id="L7T-Zc-H1r"/>
+                            <constraint firstItem="o5j-iM-Nzr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="114" id="g0e-3J-Zwd"/>
+                            <constraint firstItem="UTb-vy-esz" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="khV-9k-38E"/>
+                            <constraint firstItem="qo0-Wi-ybJ" firstAttribute="top" secondItem="o5j-iM-Nzr" secondAttribute="bottom" constant="56" id="ncm-QT-uvM"/>
+                            <constraint firstItem="23V-OR-6eb" firstAttribute="top" secondItem="UTb-vy-esz" secondAttribute="bottom" constant="54" id="rsI-ZD-UCa"/>
+                            <constraint firstItem="23V-OR-6eb" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ur0-f3-phC"/>
+                            <constraint firstItem="23V-OR-6eb" firstAttribute="centerX" secondItem="o5j-iM-Nzr" secondAttribute="centerX" id="vdp-SZ-0VW"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="upload_music_button" destination="23V-OR-6eb" id="gDo-Yy-lic"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="34.782608695652179" y="55.580357142857139"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
