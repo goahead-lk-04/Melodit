@@ -11,152 +11,210 @@ import AVFoundation
 import AudioKit
 import SwiftPlot
 import AudioToolbox
+import Accelerate
 
 class MusicModel {
-    
     var model = try! onsets_frames_pytorch_model()
-    
-    func processAudio(music_file audioURL: URL) {
-        
 
-         do {
-             let audioData = try Data(contentsOf: audioURL)
-           
-             let sampleRate = Double(model.model.modelDescription.inputDescriptionsByName["input"]!.multiArrayConstraint!.shape[1] as! Int)
-                 
-             let audioFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: sampleRate, channels: 1, interleaved: false)
-                 
-             let audioBuffer = try AVAudioPCMBuffer(pcmFormat: audioFormat!, frameCapacity: UInt32(audioData.count))
-                 
-             audioBuffer!.frameLength = audioBuffer!.frameCapacity
+    func processAudio(music_file audioURL: URL) {
+        do {
+            let audioData = try Data(contentsOf: audioURL)
+                       
+            let sampleRate = Double(model.model.modelDescription.inputDescriptionsByName["input"]!.multiArrayConstraint!.shape[1] as! Int)
+                             
+            let audioFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: sampleRate, channels: 1, interleaved: false)
+                             
+            let audioBuffer = try AVAudioPCMBuffer(pcmFormat: audioFormat!, frameCapacity: UInt32(audioData.count))
+            audioBuffer!.frameLength = audioBuffer!.frameCapacity
             let audioBufferChannelData = audioBuffer!.floatChannelData![0]
             let dataPointer = audioData.withUnsafeBytes { $0.load(as: UnsafePointer<Float>.self) }
-                 //audioBufferChannelData.assign(from: dataPointer, count: Int(audioBuffer!.frameLength))
-                 
-             let processedData = processAudioBuffer(audioBuffer!)
+              
+
+            let processedData = processAudioBuffer(audioBuffer!)
              
-             let input = try MLMultiArray(shape: [1, 384, 228, 1] as [NSNumber], dataType: .float32)
-             let inputPointer = UnsafeMutablePointer<Float>(OpaquePointer(input.dataPointer))
+            // input for the CoreML model
+            let input = try MLMultiArray(shape: [1, 384, 228, 1] as [NSNumber], dataType: .float32)
+            let inputPointer = UnsafeMutablePointer<Float>(OpaquePointer(input.dataPointer))
              
-             for i in 0..<processedData.count {
-                 inputPointer[i] = Float(processedData[i])
-             }
+            for i in 0..<processedData.count {
+                inputPointer[i] = Float(processedData[i])
+            }
              
-             if let modelOutput = try? model.prediction(input: input) {
-                 let onsetPred = modelOutput.onset
+            // prediction
+            if let modelOutput = try? model.prediction(input: input) {
+            let onsetPred = modelOutput.onset
+            let batchSize = onsetPred.shape[0].intValue
+            let height = onsetPred.shape[1].intValue
+            let width = onsetPred.shape[2].intValue
+    
+            for b in 0..<batchSize {
+                for h in 0..<height {
+                    for w in 0..<width {
+                        let onsetValue = onsetPred[[b, h, w] as [NSNumber]].floatValue
+                        let offsetValue = modelOutput.offset[[b, h, w] as [NSNumber]].floatValue
+                        let frameValue = modelOutput.frame[[b, h, w] as [NSNumber]].floatValue
+                        let velocityValue = modelOutput.velocity[[b, h, w] as [NSNumber]].floatValue
+                        let activation = modelOutput.activation[[b, h, w] as [NSNumber]].floatValue
+                        
+                            
+                        print("Value at (\(b), \(h), \(w)): Onset=\(onsetValue), Offset=\(offsetValue), Frame=\(frameValue), Velocity=\(velocityValue), Activation=\(activation)")
+                    }
+                }
+            }
+         
+            let onsetPredictions: [[Float]] = modelOutput.onset.to2DArray()
+            let offsetPredictions: [[Float]] = modelOutput.offset.to2DArray()
+            let framePredictions: [[Float]] = modelOutput.frame.to2DArray()
+            let velocityPredictions: [[Float]] = modelOutput.velocity.to2DArray()
+          
 
-                 let batchSize = onsetPred.shape[0].intValue
-                 let height = onsetPred.shape[1].intValue
-                 let width = onsetPred.shape[2].intValue
-
-                 for b in 0..<batchSize {
-                     for h in 0..<height {
-                         for w in 0..<width {
-                             let index = [b, h, w] as [NSNumber]
-                             let value = onsetPred[index].floatValue
-                             print("Value at (\(b), \(h), \(w)): \(value)")
-                         }
-                     }
-                 }
-                 
-                 
-                 let onsetPredictions: [[Float]] = modelOutput.onset.to2DArray()
-                 let offsetPredictions: [[Float]] = modelOutput.offset.to2DArray()
-                 let framePredictions: [[Float]] = modelOutput.frame.to2DArray()
-                 let velocityPredictions: [[Float]] = modelOutput.velocity.to2DArray()
-                 
-                 print("Onset Predictions: \(onsetPredictions.count) x \(onsetPredictions.first?.count ?? 0)")
-                 print("Offset Predictions: \(offsetPredictions.count) x \(offsetPredictions.first?.count ?? 0)")
-                 print("Frame Predictions: \(framePredictions.count) x \(framePredictions.first?.count ?? 0)")
-                 print("Velocity Predictions: \(velocityPredictions.count) x \(velocityPredictions.first?.count ?? 0)")
-
-
-                 var pitches: [UInt8] = []
-                 var intervals: [[Double]] = []
-                 var velocities: [UInt8] = []
-
-                 let numFrames = onsetPredictions.count
-                 guard let numPitches = onsetPredictions.first?.count else {
-                     fatalError("Onset predictions array is empty")
-                 }
-                 print("Sample onset prediction values: \(onsetPredictions[0][0]), \(onsetPredictions[100][0]), \(onsetPredictions[200][0])")
-                 print("Sample offset prediction values: \(offsetPredictions[0][0]), \(offsetPredictions[100][0]), \(offsetPredictions[200][0])")
-                 print("Sample velocity prediction values: \(velocityPredictions[0][0]), \(velocityPredictions[100][0]), \(velocityPredictions[200][0])")
-
-                 for pitch in 0..<numPitches {
-                     var onsetFrame: Int? = nil
-                     
-                     for frame in 0..<numFrames {
-                         let onsetValue = onsetPredictions[frame][pitch]
-                         let offsetValue = offsetPredictions[frame][pitch]
-                         
-                         if onsetValue > 3.484526e-08{
-                             if onsetFrame == nil {
-                                 onsetFrame = frame
-                                 print("Onset detected at frame \(frame) for pitch \(pitch) with value \(onsetValue)")
-                             }
-                         }
-                         
-                         if var onsetFrame = onsetFrame, offsetValue > 3.484526e-08 {
-                                     print("Offset detected at frame \(frame) for pitch \(pitch) with value \(offsetValue)")
-                                     let startTime = Double(onsetFrame) / sampleRate
-                                     let duration = Double(frame - onsetFrame) / sampleRate
-                                     
-                                     let scaledVelocity = UInt8(max(0, min(127, velocityPredictions[onsetFrame][pitch] * 127.0)))
-                                     
-                                     pitches.append(UInt8(pitch))
-                                     intervals.append([startTime, duration])
-                                     velocities.append(scaledVelocity)
-                                     onsetFrame = 0
-                                 }
-                     }
-                 }
-
-                 if pitches.isEmpty {
-                     print("No pitches extracted.")
-                 }
-                 if intervals.isEmpty {
-                     print("No intervals extracted.")
-                 }
-                 if velocities.isEmpty {
-                     print("No velocities extracted.")
-                 }
-
-                 let midiFilePath = "/Users/lizzikuchyna/AppleProjects/Melodit/midi/file3.mid"
-                 print("Saving MIDI file to path: \(midiFilePath)")
-                 
-                 print("here")
-                 saveMIDI(path: midiFilePath, pitches: pitches, intervals: intervals, velocities: velocities)
-                             
-                 
-             } else {
-                 print("Failed to make prediction")
-             }
-
-
-             
-         } catch {
-             print("Error processing audio:", error.localizedDescription)
-         }
+            let midiFilePath = "/Users/lizzikuchyna/AppleProjects/Melodit/midi/file3.mid"
+            print("Saving MIDI file to path: \(midiFilePath)")
         
+            let notes = extractNotes(onsetPredictions: onsetPredictions, offsetPredictions: offsetPredictions, framePredictions: framePredictions, velocityPredictions: velocityPredictions)
+
+            var convertedPitches: [UInt8] = []
+            for e in notes.enumerated() {
+                convertedPitches.append(UInt8(e.element.pitch))
+            }
+
+            var convertedIntervals: [[Double]] = []
+            for e in notes.enumerated() {
+                let start = Double(e.element.startTime)
+                let end = Double(e.element.endTime)
+                convertedIntervals.append([start, end])
+            }
+
+            var convertedVelocities: [UInt8] = []
+            for e in notes.enumerated() {
+                convertedVelocities.append(UInt8(e.element.velocity))
+            }
+
+            saveMIDI(path: midiFilePath, pitches: convertedPitches, intervals: convertedIntervals, velocities: convertedVelocities)
+
+
+            } else {
+                print("Failed to make prediction")
+            }
+        } catch {
+            print("Error processing audio:", error.localizedDescription)
+        }
+    }
+
+    func processAudioBuffer(_ buffer: AVAudioPCMBuffer) -> [Float] {
+        return generateMelSpectrogram(from: buffer)
+    }
+
+    // метод для генерації спектограми, перероблений з пайтона
+    func generateMelSpectrogram(from buffer: AVAudioPCMBuffer) -> [Float] {
+        guard let floatChannelData = buffer.floatChannelData else {
+            fatalError("Buffer must have float channel data")
+        }
+        
+        let numSamples = vDSP_Length(buffer.frameLength)
+        let numChannels = Int(buffer.format.channelCount)
+        let sampleRate = Float(buffer.format.sampleRate)
+        let hopLength = Int(sampleRate * 0.01)
+        
+        var melSpectrogram: [Float] = []
+        
+        for channel in 0..<numChannels {
+            var channelData = Array(UnsafeBufferPointer(start: floatChannelData[channel], count: Int(numSamples)))
+            
+            // Hann window function
+            var window = [Float](repeating: 0.0, count: Int(buffer.frameLength))
+            vDSP_hann_window(&window, vDSP_Length(buffer.frameLength), Int32(vDSP_HANN_NORM))
+            vDSP_vmul(channelData, 1, window, 1, &channelData, 1, vDSP_Length(buffer.frameLength))
+            
+            var complexData = [DSPComplex](repeating: DSPComplex(), count: Int(buffer.frameLength / 2))
+            for i in 0..<complexData.count {
+                complexData[i].real = channelData[2*i]
+                complexData[i].imag = channelData[2*i + 1]
+            }
+            
+            var fftSetup = vDSP_create_fftsetup(vDSP_Length(log2(Float(buffer.frameLength))), FFTRadix(FFT_RADIX2))
+            var realParts = complexData.map { $0.real }
+            var imagParts = complexData.map { $0.imag }
+            var splitComplex = DSPSplitComplex(realp: &realParts, imagp: &imagParts)
+            
+            vDSP_fft_zrip(fftSetup!, &splitComplex, 1, vDSP_Length(log2(Float(buffer.frameLength))), FFTDirection(FFT_FORWARD))
+            
+            var magnitudes = [Float](repeating: 0.0, count: Int(buffer.frameLength / 2))
+            vDSP_zvmags(&splitComplex, 1, &magnitudes, 1, vDSP_Length(buffer.frameLength / 2))
+            
+            let N_MELS = 64
+            var melOutput = [Float](repeating: 0.0, count: N_MELS )
+            let numFFTbins = Int(buffer.frameLength / 2)
+            var melBasis = Array(repeating: [Float](repeating: 0.0, count: numFFTbins), count: N_MELS)
+            
+            // similar to torch.matmul in Python
+            for m in 0..<N_MELS {
+                for k in 0..<Int(buffer.frameLength / 2) {
+                    melOutput[m] += magnitudes[k] * melBasis[m][k]
+                }
+            }
+            for m in 0..<N_MELS {
+                melOutput[m] = logf(max(melOutput[m], 1e-5))
+            }
+            
+            melSpectrogram.append(contentsOf: melOutput)
+            
+            vDSP_destroy_fftsetup(fftSetup)
+        }
+        
+        return melSpectrogram
     }
     
     
-    
-//    func savePianoroll(path: String, onset: [Float], frame: [Float]) {
-//        var plot = Plot()
-//        var scatterPlot = ScatterPlot<Float, Float>()
-//        scatterPlot.addSeries(onset, frame, label: "Onsets and Frames")
-//        plot.addPlot(scatterPlot)
-//        
-//        plot.plotTitle = PlotTitle("Pianoroll")
-//        plot.plotLabel = PlotLabel(xLabel: "Time", yLabel: "Frequency")
-//        
-//        let renderer = AGGRenderer()
-//        try? plot.drawGraphAndOutput(fileName: path, renderer: renderer)
-//    }
+    func extractNotes(onsetPredictions: [[Float]], offsetPredictions: [[Float]], framePredictions: [[Float]], velocityPredictions: [[Float]]) -> [Note] {
+        var notes = [Note]()
+        let threshold: Float = 0.5
 
+        let height = onsetPredictions.count
+        let width = onsetPredictions[0].count
 
+        for h in 0..<height {
+            for w in 0..<width {
+                //print(onsetPredictions[h][w] )
+                if onsetPredictions[h][w] > 0.001124{
+              
+                    var startTime = Double(h)
+                    var endTime = startTime
+                    let pitch = w
+                    var velocity = Int(velocityPredictions[h][w])
+                    
+                    for h2 in h..<height {
+                        if offsetPredictions[h2][w] > threshold {
+                            endTime = Double(h2)
+                            break
+                        }
+                    }
+                    
+                    print("s \(startTime)")
+                    print("e \(endTime)")
+                    endTime += 1
+                    if endTime > startTime  {
+                        print("ff")
+                        
+                        if velocity < 0 { velocity *= -1 }
+                        if w % 2 == 0 {
+                            velocity += 10
+                            startTime -= 8
+                            endTime -= 5
+                        } else {
+                            velocity += 5
+                            startTime -= 5
+                            endTime -= 2
+                        }
+                        let note = Note(startTime: startTime, endTime: endTime, pitch: pitch, velocity: velocity)
+                        notes.append(note)
+                    }
+                }
+            }
+        }
+        print("here \(notes)")
+        return notes
+    }
 
     func saveMIDI(path: String, pitches: [UInt8], intervals: [[Double]], velocities: [UInt8]) {
         var musicSequence: MusicSequence?
@@ -219,16 +277,9 @@ class MusicModel {
         
         print("MIDI file saved successfully at \(path)")
     }
-
-
     
-    func processAudioBuffer(_ buffer: AVAudioPCMBuffer) -> [Float] {
-        var processedData: [Float] = []
-        
-        
-        return processedData
-    }
 }
+
 
 extension MLMultiArray {
     func to2DArray() -> [[Float]] {
@@ -241,4 +292,11 @@ extension MLMultiArray {
         }
         return array
     }
+}
+
+struct Note {
+    var startTime: Double
+    var endTime: Double
+    var pitch: Int
+    var velocity: Int
 }

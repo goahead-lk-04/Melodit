@@ -19,7 +19,6 @@
 		5358E5D52C14FF27009E7F8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5358E5D42C14FF27009E7F8D /* Assets.xcassets */; };
 		5358E5D82C14FF27009E7F8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5358E5D62C14FF27009E7F8D /* LaunchScreen.storyboard */; };
 		535F3EB02C1E372F00A59456 /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F3EAF2C1E372F00A59456 /* MusicModel.swift */; };
-		535F3EB22C1E375000A59456 /* converted_model.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 535F3EB12C1E375000A59456 /* converted_model.mlpackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +33,6 @@
 		5358E5D72C14FF27009E7F8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5358E5D92C14FF27009E7F8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		535F3EAF2C1E372F00A59456 /* MusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
-		535F3EB12C1E375000A59456 /* converted_model.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = converted_model.mlpackage; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,16 +78,15 @@
 		5358E5CA2C14FF24009E7F8D /* Melodit */ = {
 			isa = PBXGroup;
 			children = (
-				535F3EB12C1E375000A59456 /* converted_model.mlpackage */,
 				530BDB552C222147004BA8E2 /* onsets_frames_pytorch_model.mlpackage */,
 				5358E5CB2C14FF24009E7F8D /* AppDelegate.swift */,
 				5358E5CD2C14FF24009E7F8D /* SceneDelegate.swift */,
 				5358E5CF2C14FF24009E7F8D /* ViewController.swift */,
+				535F3EAF2C1E372F00A59456 /* MusicModel.swift */,
 				5358E5D12C14FF24009E7F8D /* Main.storyboard */,
 				5358E5D42C14FF27009E7F8D /* Assets.xcassets */,
 				5358E5D62C14FF27009E7F8D /* LaunchScreen.storyboard */,
 				5358E5D92C14FF27009E7F8D /* Info.plist */,
-				535F3EAF2C1E372F00A59456 /* MusicModel.swift */,
 			);
 			path = Melodit;
 			sourceTree = "<group>";
@@ -176,7 +173,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5358E5D02C14FF24009E7F8D /* ViewController.swift in Sources */,
-				535F3EB22C1E375000A59456 /* converted_model.mlpackage in Sources */,
 				535F3EB02C1E372F00A59456 /* MusicModel.swift in Sources */,
 				530BDB562C222147004BA8E2 /* onsets_frames_pytorch_model.mlpackage in Sources */,
 				5358E5CC2C14FF24009E7F8D /* AppDelegate.swift in Sources */,
@@ -325,9 +321,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Melodit/Melodit.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D85QWSUNYA;
+				DEVELOPMENT_TEAM = WB83P8J3VX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Melodit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -341,8 +339,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ukma.kuchyna.Melodit;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.com.ukma.kuchyna.Melodit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -358,9 +357,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Melodit/Melodit.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D85QWSUNYA;
+				DEVELOPMENT_TEAM = WB83P8J3VX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Melodit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -374,8 +375,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ukma.kuchyna.Melodit;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.com.ukma.kuchyna.Melodit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
