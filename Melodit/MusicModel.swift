@@ -66,13 +66,6 @@ class MusicModel {
             let offsetPredictions: [[Float]] = modelOutput.offset.to2DArray()
             let framePredictions: [[Float]] = modelOutput.frame.to2DArray()
             let velocityPredictions: [[Float]] = modelOutput.velocity.to2DArray()
-          
-//            guard let midiURL = Bundle.main.url(forResource: "currentFile", withExtension: "mid") else {
-//                fatalError("Failed to locate MIDI file in bundle.")
-//            }
-//
-//            let midiFilePath = midiURL.path
-//            print(midiFilePath)
 
         
             let notes = extractNotes(onsetPredictions: onsetPredictions, offsetPredictions: offsetPredictions, framePredictions: framePredictions, velocityPredictions: velocityPredictions)
@@ -126,11 +119,6 @@ class MusicModel {
             } catch {
                 print("Error copying MIDI file: \(error.localizedDescription)")
             }
-                
-                // /var/mobile/Containers/Data/Application/9C695F8B-4682-4B85-AEA4-788339765776/Documents/currentFile.mid
-
-//            saveMIDI(path: midiFilePath, pitches: convertedPitches, intervals: convertedIntervals, velocities: convertedVelocities)
-
 
             } else {
                 print("Failed to make prediction")
