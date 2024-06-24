@@ -57,7 +57,7 @@ class MusicModel {
                         let activation = modelOutput.activation[[b, h, w] as [NSNumber]].floatValue
                         
                             
-                        print("Value at (\(b), \(h), \(w)): Onset=\(onsetValue), Offset=\(offsetValue), Frame=\(frameValue), Velocity=\(velocityValue), Activation=\(activation)")
+//                        print("Value at (\(b), \(h), \(w)): Onset=\(onsetValue), Offset=\(offsetValue), Frame=\(frameValue), Velocity=\(velocityValue), Activation=\(activation)")
                     }
                 }
             }
@@ -67,8 +67,13 @@ class MusicModel {
             let framePredictions: [[Float]] = modelOutput.frame.to2DArray()
             let velocityPredictions: [[Float]] = modelOutput.velocity.to2DArray()
           
+            guard let midiURL = Bundle.main.url(forResource: "currentFile", withExtension: "mid") else {
+                fatalError("Failed to locate MIDI file in bundle.")
+            }
 
-            let midiFilePath = "/Users/lizzikuchyna/AppleProjects/Melodit/midi/file3.mid"
+            let midiFilePath = midiURL.path
+
+            //let midiFilePath = "/Users/lizzikuchyna/AppleProjects/Melodit/midi/currentFile.mid"
             print("Saving MIDI file to path: \(midiFilePath)")
         
             let notes = extractNotes(onsetPredictions: onsetPredictions, offsetPredictions: offsetPredictions, framePredictions: framePredictions, velocityPredictions: velocityPredictions)
@@ -190,11 +195,8 @@ class MusicModel {
                         }
                     }
                     
-                    print("s \(startTime)")
-                    print("e \(endTime)")
                     endTime += 1
                     if endTime > startTime  {
-                        print("ff")
                         
                         if velocity < 0 { velocity *= -1 }
                         if w % 2 == 0 {
@@ -212,7 +214,7 @@ class MusicModel {
                 }
             }
         }
-        print("here \(notes)")
+        //print("here \(notes)")
         return notes
     }
 

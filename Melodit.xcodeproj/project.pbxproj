@@ -19,6 +19,13 @@
 		5358E5D52C14FF27009E7F8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5358E5D42C14FF27009E7F8D /* Assets.xcassets */; };
 		5358E5D82C14FF27009E7F8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5358E5D62C14FF27009E7F8D /* LaunchScreen.storyboard */; };
 		535F3EB02C1E372F00A59456 /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F3EAF2C1E372F00A59456 /* MusicModel.swift */; };
+		5381CE2A2C28F881004D2F0B /* currentFile.mid in Resources */ = {isa = PBXBuildFile; fileRef = 5381CE222C28F881004D2F0B /* currentFile.mid */; };
+		5381CE2B2C28F881004D2F0B /* example.flac in Resources */ = {isa = PBXBuildFile; fileRef = 5381CE232C28F881004D2F0B /* example.flac */; };
+		5381CE2C2C28F881004D2F0B /* file.mid in Resources */ = {isa = PBXBuildFile; fileRef = 5381CE242C28F881004D2F0B /* file.mid */; };
+		5381CE2D2C28F881004D2F0B /* file2.mid in Resources */ = {isa = PBXBuildFile; fileRef = 5381CE252C28F881004D2F0B /* file2.mid */; };
+		5381CE2E2C28F881004D2F0B /* file3.mid in Resources */ = {isa = PBXBuildFile; fileRef = 5381CE262C28F881004D2F0B /* file3.mid */; };
+		5381CE2F2C28F881004D2F0B /* info.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5381CE272C28F881004D2F0B /* info.txt */; };
+		5381CE302C28F881004D2F0B /* output.mid in Resources */ = {isa = PBXBuildFile; fileRef = 5381CE282C28F881004D2F0B /* output.mid */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +40,13 @@
 		5358E5D72C14FF27009E7F8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5358E5D92C14FF27009E7F8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		535F3EAF2C1E372F00A59456 /* MusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
+		5381CE222C28F881004D2F0B /* currentFile.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = currentFile.mid; sourceTree = "<group>"; };
+		5381CE232C28F881004D2F0B /* example.flac */ = {isa = PBXFileReference; lastKnownFileType = file; path = example.flac; sourceTree = "<group>"; };
+		5381CE242C28F881004D2F0B /* file.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = file.mid; sourceTree = "<group>"; };
+		5381CE252C28F881004D2F0B /* file2.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = file2.mid; sourceTree = "<group>"; };
+		5381CE262C28F881004D2F0B /* file3.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = file3.mid; sourceTree = "<group>"; };
+		5381CE272C28F881004D2F0B /* info.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = info.txt; sourceTree = "<group>"; };
+		5381CE282C28F881004D2F0B /* output.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = output.mid; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +75,7 @@
 		5358E5BF2C14FF24009E7F8D = {
 			isa = PBXGroup;
 			children = (
+				5381CE292C28F881004D2F0B /* midi */,
 				5358E5CA2C14FF24009E7F8D /* Melodit */,
 				5358E5C92C14FF24009E7F8D /* Products */,
 				530BDB582C22237D004BA8E2 /* Frameworks */,
@@ -89,6 +104,20 @@
 				5358E5D92C14FF27009E7F8D /* Info.plist */,
 			);
 			path = Melodit;
+			sourceTree = "<group>";
+		};
+		5381CE292C28F881004D2F0B /* midi */ = {
+			isa = PBXGroup;
+			children = (
+				5381CE222C28F881004D2F0B /* currentFile.mid */,
+				5381CE232C28F881004D2F0B /* example.flac */,
+				5381CE242C28F881004D2F0B /* file.mid */,
+				5381CE252C28F881004D2F0B /* file2.mid */,
+				5381CE262C28F881004D2F0B /* file3.mid */,
+				5381CE272C28F881004D2F0B /* info.txt */,
+				5381CE282C28F881004D2F0B /* output.mid */,
+			);
+			path = midi;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,9 +188,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5381CE2C2C28F881004D2F0B /* file.mid in Resources */,
 				5358E5D82C14FF27009E7F8D /* LaunchScreen.storyboard in Resources */,
 				5358E5D52C14FF27009E7F8D /* Assets.xcassets in Resources */,
+				5381CE302C28F881004D2F0B /* output.mid in Resources */,
+				5381CE2A2C28F881004D2F0B /* currentFile.mid in Resources */,
+				5381CE2E2C28F881004D2F0B /* file3.mid in Resources */,
+				5381CE2B2C28F881004D2F0B /* example.flac in Resources */,
 				5358E5D32C14FF24009E7F8D /* Main.storyboard in Resources */,
+				5381CE2F2C28F881004D2F0B /* info.txt in Resources */,
+				5381CE2D2C28F881004D2F0B /* file2.mid in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
