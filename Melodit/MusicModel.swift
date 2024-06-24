@@ -8,8 +8,6 @@
 import Foundation
 import CoreML
 import AVFoundation
-import AudioKit
-import SwiftPlot
 import AudioToolbox
 import Accelerate
 
@@ -107,17 +105,11 @@ class MusicModel {
                 try fileManager.copyItem(at: bundleURL, to: destinationURL)
                 print("Successfully copied MIDI file to documents directory.")
 
-                if fileManager.fileExists(atPath: destinationURL.path) {
-                    print("MIDI file exists at destination path.")
-                } else {
-                    print("MIDI file does not exist at destination path.")
-                }
-                    
                 let midiFilePath = destinationURL.path
                 saveMIDI(path: midiFilePath, pitches: convertedPitches, intervals: convertedIntervals, velocities: convertedVelocities)
                     
             } catch {
-                print("Error copying MIDI file: \(error.localizedDescription)")
+                    print("Error copying MIDI file: \(error.localizedDescription)")
             }
 
             } else {
