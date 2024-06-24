@@ -73,7 +73,6 @@ class MusicModel {
 
             let midiFilePath = midiURL.path
 
-            //let midiFilePath = "/Users/lizzikuchyna/AppleProjects/Melodit/midi/currentFile.mid"
             print("Saving MIDI file to path: \(midiFilePath)")
         
             let notes = extractNotes(onsetPredictions: onsetPredictions, offsetPredictions: offsetPredictions, framePredictions: framePredictions, velocityPredictions: velocityPredictions)

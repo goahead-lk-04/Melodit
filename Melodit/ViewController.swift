@@ -36,7 +36,6 @@ class ViewController: UIViewController {
         }
         view.backgroundColor = UIColor(named: "backgroundC")
         
-        model.processAudio(music_file: URL(fileURLWithPath: "/Users/lizzikuchyna/AppleProjects/Melodit/midi/example.flac"))
         
     }
     
