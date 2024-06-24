@@ -26,6 +26,16 @@
 		5381CE2E2C28F881004D2F0B /* file3.mid in Resources */ = {isa = PBXBuildFile; fileRef = 5381CE262C28F881004D2F0B /* file3.mid */; };
 		5381CE2F2C28F881004D2F0B /* info.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5381CE272C28F881004D2F0B /* info.txt */; };
 		5381CE302C28F881004D2F0B /* output.mid in Resources */ = {isa = PBXBuildFile; fileRef = 5381CE282C28F881004D2F0B /* output.mid */; };
+		CD3CC55C2C29038800957287 /* ButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3CC55B2C29038800957287 /* ButtonsViewController.swift */; };
+		CD3CC55E2C2904E800957287 /* ShowNotesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3CC55D2C2904E800957287 /* ShowNotesController.swift */; };
+		CD3CC5602C2907BC00957287 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3CC55F2C2907BC00957287 /* Note.swift */; };
+		CD3CC5622C2907BF00957287 /* NoteConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3CC5612C2907BF00957287 /* NoteConverter.swift */; };
+		CD3CC5652C2907CC00957287 /* HarmonicSeries.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3CC5642C2907CC00957287 /* HarmonicSeries.swift */; };
+		CD3CC5672C2907D100957287 /* MIDIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3CC5662C2907D100957287 /* MIDIParser.swift */; };
+		CD3CC5692C2907D800957287 /* StaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3CC5682C2907D800957287 /* StaffView.swift */; };
+		CD3CC56C2C2908CD00957287 /* MIDIKit in Frameworks */ = {isa = PBXBuildFile; productRef = CD3CC56B2C2908CD00957287 /* MIDIKit */; };
+		CD3CC56E2C2908D000957287 /* MIDIKitIO in Frameworks */ = {isa = PBXBuildFile; productRef = CD3CC56D2C2908D000957287 /* MIDIKitIO */; };
+		CD3CC5702C2908D300957287 /* MIDIKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = CD3CC56F2C2908D300957287 /* MIDIKitUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +57,14 @@
 		5381CE262C28F881004D2F0B /* file3.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = file3.mid; sourceTree = "<group>"; };
 		5381CE272C28F881004D2F0B /* info.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = info.txt; sourceTree = "<group>"; };
 		5381CE282C28F881004D2F0B /* output.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; path = output.mid; sourceTree = "<group>"; };
+		CD3CC55B2C29038800957287 /* ButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsViewController.swift; sourceTree = "<group>"; };
+		CD3CC55D2C2904E800957287 /* ShowNotesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowNotesController.swift; sourceTree = "<group>"; };
+		CD3CC55F2C2907BC00957287 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		CD3CC5612C2907BF00957287 /* NoteConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteConverter.swift; sourceTree = "<group>"; };
+		CD3CC5632C2907C300957287 /* NoteUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoteUtils.h; sourceTree = "<group>"; };
+		CD3CC5642C2907CC00957287 /* HarmonicSeries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonicSeries.swift; sourceTree = "<group>"; };
+		CD3CC5662C2907D100957287 /* MIDIParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIDIParser.swift; sourceTree = "<group>"; };
+		CD3CC5682C2907D800957287 /* StaffView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaffView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +74,10 @@
 			files = (
 				530BDB5F2C2223C9004BA8E2 /* AudioKit in Frameworks */,
 				530BDB652C22268C004BA8E2 /* SoundpipeAudioKit in Frameworks */,
+				CD3CC5702C2908D300957287 /* MIDIKitUI in Frameworks */,
 				530BDB5C2C222382004BA8E2 /* SwiftPlot in Frameworks */,
+				CD3CC56C2C2908CD00957287 /* MIDIKit in Frameworks */,
+				CD3CC56E2C2908D000957287 /* MIDIKitIO in Frameworks */,
 				530BDB672C222B32004BA8E2 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,6 +114,7 @@
 		5358E5CA2C14FF24009E7F8D /* Melodit */ = {
 			isa = PBXGroup;
 			children = (
+				CD3CC55A2C29035B00957287 /* NotesGeneration */,
 				530BDB552C222147004BA8E2 /* onsets_frames_pytorch_model.mlpackage */,
 				5358E5CB2C14FF24009E7F8D /* AppDelegate.swift */,
 				5358E5CD2C14FF24009E7F8D /* SceneDelegate.swift */,
@@ -120,6 +142,21 @@
 			path = midi;
 			sourceTree = "<group>";
 		};
+		CD3CC55A2C29035B00957287 /* NotesGeneration */ = {
+			isa = PBXGroup;
+			children = (
+				CD3CC5642C2907CC00957287 /* HarmonicSeries.swift */,
+				CD3CC5632C2907C300957287 /* NoteUtils.h */,
+				CD3CC5612C2907BF00957287 /* NoteConverter.swift */,
+				CD3CC55F2C2907BC00957287 /* Note.swift */,
+				CD3CC55B2C29038800957287 /* ButtonsViewController.swift */,
+				CD3CC55D2C2904E800957287 /* ShowNotesController.swift */,
+				CD3CC5662C2907D100957287 /* MIDIParser.swift */,
+				CD3CC5682C2907D800957287 /* StaffView.swift */,
+			);
+			path = NotesGeneration;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,6 +177,9 @@
 				530BDB5B2C222382004BA8E2 /* SwiftPlot */,
 				530BDB5E2C2223C9004BA8E2 /* AudioKit */,
 				530BDB642C22268C004BA8E2 /* SoundpipeAudioKit */,
+				CD3CC56B2C2908CD00957287 /* MIDIKit */,
+				CD3CC56D2C2908D000957287 /* MIDIKitIO */,
+				CD3CC56F2C2908D300957287 /* MIDIKitUI */,
 			);
 			productName = Melodit;
 			productReference = 5358E5C82C14FF24009E7F8D /* Melodit.app */;
@@ -173,6 +213,7 @@
 				530BDB572C222329004BA8E2 /* XCRemoteSwiftPackageReference "swiftplot" */,
 				530BDB5D2C2223C9004BA8E2 /* XCRemoteSwiftPackageReference "AudioKit" */,
 				530BDB632C22268C004BA8E2 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
+				CD3CC56A2C2908B200957287 /* XCRemoteSwiftPackageReference "MIDIKit" */,
 			);
 			productRefGroup = 5358E5C92C14FF24009E7F8D /* Products */;
 			projectDirPath = "";
@@ -211,8 +252,15 @@
 				5358E5D02C14FF24009E7F8D /* ViewController.swift in Sources */,
 				535F3EB02C1E372F00A59456 /* MusicModel.swift in Sources */,
 				530BDB562C222147004BA8E2 /* onsets_frames_pytorch_model.mlpackage in Sources */,
+				CD3CC5602C2907BC00957287 /* Note.swift in Sources */,
+				CD3CC55E2C2904E800957287 /* ShowNotesController.swift in Sources */,
+				CD3CC5622C2907BF00957287 /* NoteConverter.swift in Sources */,
 				5358E5CC2C14FF24009E7F8D /* AppDelegate.swift in Sources */,
+				CD3CC55C2C29038800957287 /* ButtonsViewController.swift in Sources */,
 				5358E5CE2C14FF24009E7F8D /* SceneDelegate.swift in Sources */,
+				CD3CC5692C2907D800957287 /* StaffView.swift in Sources */,
+				CD3CC5672C2907D100957287 /* MIDIParser.swift in Sources */,
+				CD3CC5652C2907CC00957287 /* HarmonicSeries.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,7 +409,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WB83P8J3VX;
+				DEVELOPMENT_TEAM = 9BW3X5XPPJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Melodit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -375,7 +423,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.com.ukma.kuchyna.Melodit;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.com.ukma.boikoinna.Melodit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -397,7 +445,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WB83P8J3VX;
+				DEVELOPMENT_TEAM = 9BW3X5XPPJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Melodit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -411,7 +459,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.com.ukma.kuchyna.Melodit;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.com.ukma.boikoinna.Melodit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -472,6 +520,14 @@
 				minimumVersion = 5.6.1;
 			};
 		};
+		CD3CC56A2C2908B200957287 /* XCRemoteSwiftPackageReference "MIDIKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/MIDIKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -489,6 +545,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 530BDB632C22268C004BA8E2 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */;
 			productName = SoundpipeAudioKit;
+		};
+		CD3CC56B2C2908CD00957287 /* MIDIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CD3CC56A2C2908B200957287 /* XCRemoteSwiftPackageReference "MIDIKit" */;
+			productName = MIDIKit;
+		};
+		CD3CC56D2C2908D000957287 /* MIDIKitIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CD3CC56A2C2908B200957287 /* XCRemoteSwiftPackageReference "MIDIKit" */;
+			productName = MIDIKitIO;
+		};
+		CD3CC56F2C2908D300957287 /* MIDIKitUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CD3CC56A2C2908B200957287 /* XCRemoteSwiftPackageReference "MIDIKit" */;
+			productName = MIDIKitUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

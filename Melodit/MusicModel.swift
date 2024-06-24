@@ -67,13 +67,13 @@ class MusicModel {
             let framePredictions: [[Float]] = modelOutput.frame.to2DArray()
             let velocityPredictions: [[Float]] = modelOutput.velocity.to2DArray()
           
-            guard let midiURL = Bundle.main.url(forResource: "currentFile", withExtension: "mid") else {
-                fatalError("Failed to locate MIDI file in bundle.")
-            }
+//            guard let midiURL = Bundle.main.url(forResource: "currentFile", withExtension: "mid") else {
+//                fatalError("Failed to locate MIDI file in bundle.")
+//            }
+//
+//            let midiFilePath = midiURL.path
+//            print(midiFilePath)
 
-            let midiFilePath = midiURL.path
-
-            print("Saving MIDI file to path: \(midiFilePath)")
         
             let notes = extractNotes(onsetPredictions: onsetPredictions, offsetPredictions: offsetPredictions, framePredictions: framePredictions, velocityPredictions: velocityPredictions)
 
@@ -93,8 +93,43 @@ class MusicModel {
             for e in notes.enumerated() {
                 convertedVelocities.append(UInt8(e.element.velocity))
             }
+            
+            guard let bundleURL = Bundle.main.url(forResource: "currentFile", withExtension: "mid") else {
+                fatalError("Failed to locate MIDI file in bundle.")
+            }
 
-            saveMIDI(path: midiFilePath, pitches: convertedPitches, intervals: convertedIntervals, velocities: convertedVelocities)
+            let fileManager = FileManager.default
+
+            guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                fatalError("Unable to access documents directory")
+            }
+
+            let destinationURL = documentsURL.appendingPathComponent("currentFile.mid")
+
+            do {
+                if fileManager.fileExists(atPath: destinationURL.path) {
+                    try fileManager.removeItem(at: destinationURL)
+                }
+
+                try fileManager.copyItem(at: bundleURL, to: destinationURL)
+                print("Successfully copied MIDI file to documents directory.")
+
+                if fileManager.fileExists(atPath: destinationURL.path) {
+                    print("MIDI file exists at destination path.")
+                } else {
+                    print("MIDI file does not exist at destination path.")
+                }
+                    
+                let midiFilePath = destinationURL.path
+                saveMIDI(path: midiFilePath, pitches: convertedPitches, intervals: convertedIntervals, velocities: convertedVelocities)
+                    
+            } catch {
+                print("Error copying MIDI file: \(error.localizedDescription)")
+            }
+                
+                // /var/mobile/Containers/Data/Application/9C695F8B-4682-4B85-AEA4-788339765776/Documents/currentFile.mid
+
+//            saveMIDI(path: midiFilePath, pitches: convertedPitches, intervals: convertedIntervals, velocities: convertedVelocities)
 
 
             } else {
@@ -170,8 +205,8 @@ class MusicModel {
     }
     
     
-    func extractNotes(onsetPredictions: [[Float]], offsetPredictions: [[Float]], framePredictions: [[Float]], velocityPredictions: [[Float]]) -> [Note] {
-        var notes = [Note]()
+    func extractNotes(onsetPredictions: [[Float]], offsetPredictions: [[Float]], framePredictions: [[Float]], velocityPredictions: [[Float]]) -> [MyNote] {
+        var notes = [MyNote]()
         let threshold: Float = 0.5
 
         let height = onsetPredictions.count
@@ -207,7 +242,7 @@ class MusicModel {
                             startTime -= 5
                             endTime -= 2
                         }
-                        let note = Note(startTime: startTime, endTime: endTime, pitch: pitch, velocity: velocity)
+                        let note = MyNote(startTime: startTime, endTime: endTime, pitch: pitch, velocity: velocity)
                         notes.append(note)
                     }
                 }
@@ -295,7 +330,7 @@ extension MLMultiArray {
     }
 }
 
-struct Note {
+struct MyNote {
     var startTime: Double
     var endTime: Double
     var pitch: Int

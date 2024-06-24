@@ -1,5 +1,5 @@
 {
-  "originHash" : "457e7e4c6b5627b33e7101da8b1f7037535b919222cd77775713c5b9b959320d",
+  "originHash" : "ca0d5c1099f955c73a48cc3321132b820af8a89bdd02fec0f05d1233e6d44d87",
   "pins" : [
     {
       "identity" : "audiokit",
@@ -13,7 +13,7 @@
     {
       "identity" : "audiokitex",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/AudioKit/AudioKitEX.git",
+      "location" : "https://github.com/AudioKit/AudioKitEX",
       "state" : {
         "revision" : "58fa4a002028a2addf96466dd5ad68182e7d387e",
         "version" : "5.6.0"
@@ -26,15 +26,6 @@
       "state" : {
         "revision" : "dd0636e151724b8ba2e0908eba4d99a6ff24d00c",
         "version" : "1.0.0"
-      }
-    },
-    {
-      "identity" : "midikit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/orchetect/MIDIKit.git",
-      "state" : {
-        "revision" : "1ad21de792318592ca7433e4626197e7a4c5e589",
-        "version" : "0.9.6"
       }
     },
     {
@@ -53,15 +44,6 @@
       "state" : {
         "revision" : "c5424eb8688217029d44e941d3a1d2ccc18c3a82",
         "version" : "2.0.0"
-      }
-    },
-    {
-      "identity" : "timecodekit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/orchetect/TimecodeKit",
-      "state" : {
-        "revision" : "63ba241b35675a23802f0937c5b938e74e4f9aea",
-        "version" : "2.0.10"
       }
     }
   ],
