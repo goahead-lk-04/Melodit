@@ -26,32 +26,29 @@ class ViewController: UIViewController {
     }
    
     @IBAction func goToNotes(_ sender: Any) {
+       
+            guard self.selectedFileURL != nil else {
+                let alertController = UIAlertController(title: "No Music File Selected",
+                                                        message: "Please upload a music file first.",
+                                                        preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+                return
+            }
+            
         
-        guard selectedFileURL != nil else {
-               let alertController = UIAlertController(title: "No Music File Selected",
-                                                       message: "Please upload a music file first.",
-                                                       preferredStyle: .alert)
-               alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-               present(alertController, animated: true, completion: nil)
-               return
-           }
-        
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                   if let buttonsVC = storyboard.instantiateViewController(withIdentifier: "ButtonsViewController") as? ButtonsViewController {
-//                       navigationController?.pushViewController(buttonsVC, animated: true)
-//                   }
     }
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let image = UIImage(named: "piano") {
             piano_img.image = image
-//            piano_img.layer.cornerRadius = 60
+
         } else {
             print("Image not found")
         }
-//        view.backgroundColor = UIColor(named: "backgroundC")
+
         
         
     }

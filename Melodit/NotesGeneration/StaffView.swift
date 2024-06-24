@@ -13,10 +13,6 @@ class StaffView: UIView {
     let trebleClefImage = UIImage(named: "treble-clef.png")
     var notes: [(UInt8,Velocity)] = []
     
-    let topOffset: CGFloat = UIScreen.main.bounds.height/20
-    let gapBetweenGroups: CGFloat = UIScreen.main.bounds.height/40
-    let gapBetweenLines = 10.0
-    let numberOfNotesInOnegroup = (UIScreen.main.bounds.maxX - UIScreen.main.bounds.minX - 60.0)/30.0
     let noteWidth: CGFloat = 12
     let noteHeight: CGFloat = 9
     let widthOfTrebleClefImage = 60.0
@@ -24,10 +20,31 @@ class StaffView: UIView {
     let noteSpacing = 30.0
     
     
+      let topOffset: CGFloat
+      let gapBetweenGroups: CGFloat
+      let gapBetweenLines: CGFloat
+      let numberOfNotesInOnegroup: CGFloat
+      
+     
+      init(frame: CGRect, topOffset: CGFloat, gapBetweenGroups: CGFloat, gapBetweenLines: CGFloat, numberOfNotesInOnegroup: CGFloat) {
+          self.topOffset = topOffset
+          self.gapBetweenGroups = gapBetweenGroups
+          self.gapBetweenLines = gapBetweenLines
+          self.numberOfNotesInOnegroup = numberOfNotesInOnegroup
+          
+          super.init(frame: frame)
+          backgroundColor = .white
+      }
+      
+      required init?(coder: NSCoder) {
+          fatalError("init(coder:) has not been implemented")
+      }
+    
+
     override func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else { return }
-           drawStaff(context: context, rect: self.bounds)
-           drawAllNotes()
+        drawStaff(context: context, rect: rect)
+        drawAllNotes()
 
     }
     
@@ -39,8 +56,11 @@ class StaffView: UIView {
     
     func drawStaff(context: CGContext, rect: CGRect) {
 
-            var currentY = rect.minY + topOffset
-        for _ in 0..<9 {
+        var currentY = rect.minY + topOffset
+        let numberOfGroups = notes.count / Int(numberOfNotesInOnegroup)
+      
+        
+        for _ in 0..<numberOfGroups {
             currentY = drawGroupOfLines(context: context, rect: rect, gapBetweenLines: gapBetweenLines, currentY: currentY)
             currentY += gapBetweenGroups
         }
@@ -68,9 +88,7 @@ class StaffView: UIView {
        
        func drawNotesInGroup(startY: CGFloat, endY: CGFloat, startIndex: Int, endIndex: Int) {
            guard UIGraphicsGetCurrentContext() != nil else { return }
-           
-           
-           
+   
            let endy = endY + editionalSpaceForC4
         
            for index in startIndex..<endIndex {
@@ -106,7 +124,7 @@ class StaffView: UIView {
 
     
     func calculateStaffPosition(noteName: String, octave: Int) -> (Int,Bool) {//position and does it have sign
-    print(noteName,octave)
+    
        let middleCOctave = 4
        
         let noteOffsets: [String: Int] = ["C": 0, "C#/Db": -1, "D": 1, "E": 2, "F": 3,"D#/Eb": -2,  "F#/Gb": -3, "G": 4, "G#/Ab": -4, "A": 5, "A#/Bb": -6,"B": 6]
@@ -124,7 +142,7 @@ class StaffView: UIView {
         
         let absPos = abs(noteOffset)
         let position = absPos + adjustedOctaveDifference
-        print(position)
+      
         if noteOffset < 0 {
             return (position, true)
         }
