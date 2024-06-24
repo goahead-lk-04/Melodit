@@ -74,6 +74,5 @@ class ButtonsViewController : UIViewController {
 extension ButtonsViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first else { return }
-//        print("PDF saved at: \(url.path)")
     }
 }

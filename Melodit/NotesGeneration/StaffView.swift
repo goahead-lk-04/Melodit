@@ -285,8 +285,7 @@ class StaffView: UIView {
             context?.strokePath()
     }
     
-    func drawSharpSymbol(at position: CGPoint) {//неправильне
-    
+    func drawSharpSymbol(at position: CGPoint) {
         let context = UIGraphicsGetCurrentContext()
        
         context?.setStrokeColor(UIColor.black.cgColor)

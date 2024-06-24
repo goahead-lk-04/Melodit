@@ -48,7 +48,7 @@
                                     <constraint firstAttribute="width" constant="210" id="vfq-MD-Lbt"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Start converting ...">
+                                <state key="normal" title="Get notes...">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -85,7 +85,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="940" y="38"/>
+            <point key="canvasLocation" x="940" y="37.677725118483409"/>
         </scene>
         <!--Buttons View Controller-->
         <scene sceneID="kLS-E8-Hx5">
