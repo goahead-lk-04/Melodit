@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         view.backgroundColor = UIColor(named: "backgroundC")
         
         model.processAudio(music_file: URL(fileURLWithPath: "/Users/lizzikuchyna/AppleProjects/Melodit/midi/example.flac"))
-        print("end")
+        
     }
     
     func getMusicFiles() {
@@ -58,21 +58,16 @@ extension ViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let selectedFileURL = urls.first else { return }
                 
-                // Handle the selected file URL with security-scoped access
-                if selectedFileURL.startAccessingSecurityScopedResource() {
-                    defer {
-                        selectedFileURL.stopAccessingSecurityScopedResource()
-                    }
-                    
-                    // Handle the selected file URL
-                    print("Selected file URL: \(selectedFileURL)")
-                    // For example, process the file
-                    model.processAudio(music_file: selectedFileURL)
-                } else {
-                    print("Error: Could not access security-scoped resource.")
-                    // You might want to show an error message to the user here
-                }
-        
+        if selectedFileURL.startAccessingSecurityScopedResource() {
+            defer {
+                selectedFileURL.stopAccessingSecurityScopedResource()
+            }
+            print("Selected file URL: \(selectedFileURL)")
+    
+            model.processAudio(music_file: selectedFileURL)
+        } else {
+            print("Error: Could not access security-scoped resource.")
+        }
         
         
         print("Selected file URL: \(selectedFileURL)")

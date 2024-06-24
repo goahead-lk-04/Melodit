@@ -21,6 +21,7 @@
       "size" : "29x29"
     },
     {
+      "filename" : "40.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
@@ -31,6 +32,7 @@
       "size" : "40x40"
     },
     {
+      "filename" : "120.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
